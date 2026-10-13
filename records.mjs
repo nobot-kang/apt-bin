@@ -7,6 +7,7 @@ export const groupKey=r=>`${r.packVersion}/${r.region}/${r.area}/${r.difficulty}
 export const formatTime=s=>`${Math.floor(s/60)}분 ${String(s%60).padStart(2,'0')}초`;
 export const mascotMood=score=>score>80?'smile':score>50?'neutral':'sad';
 export const mascotPath=score=>`./assets/mascot-${mascotMood(score)}.webp`;
+export const CHARACTER_RIGHTS='펭귄 캐릭터 ‘또박’ © 2026 Nobot Kang. All rights reserved.';
 export const mascotAlt=score=>score>80?'활짝 웃는 펭귄 마스코트':score>50?'평범한 표정의 펭귄 마스코트':'시무룩한 펭귄 마스코트';
 export function validRecord(r) {
   return Boolean(r && typeof r.id==='string' && /^[a-zA-Z0-9-]{1,80}$/.test(r.id) &&
@@ -73,5 +74,6 @@ export async function recordImage(r) {
   text(GAME_URL,46,606,24,green);
   const date=new Date(r.createdAt).toLocaleString('ko-KR',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
   text(date,46,638,13,muted,'400');
+  ctx.textAlign='right';text(CHARACTER_RIGHTS,955,638,12,muted,'400');ctx.textAlign='left';
   return new Promise((resolve,reject)=>canvas.toBlob(blob=>blob?resolve(blob):reject(Error('이미지 생성 실패')),'image/png'));
 }

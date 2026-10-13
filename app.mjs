@@ -83,7 +83,7 @@ function intro() {
   session = null; clearInterval(timer);
   main.innerHTML = `<section class="intro-grid">
     <div class="intro-copy"><p class="eyebrow">오늘의 가격 감각, 가볍게 한 판</p><h1>아파트 값도<br><span>분리 수거</span>가 되나요?</h1><p class="lead">두 가격을 기준으로, 새 카드의 자리를 찾아요.<br>낮으면 <b>${LABELS.below}</b>, 사이면 <b>${LABELS.inside}</b>, 높으면 <b>${LABELS.above}</b>.</p>
-      <div class="mini-facts"><span>혼자서</span><span>본게임 10판 · 연습은 선택</span><span>시간 제한 없음</span></div>
+      <div class="mini-facts"><span>혼자서</span><span>본게임 10판 · 연습은 선택</span><span>시간 제한 없음</span></div><button type="button" class="rules-teaser" data-rules-video aria-haspopup="dialog" aria-controls="rules-video"><span class="rules-thumb" aria-hidden="true"><img src="./assets/rules-video.jpg" alt="" width="1280" height="720" decoding="async"><span class="rules-time">1:24</span></span><span class="rules-copy"><span class="rules-kicker">처음이라면 먼저 보세요</span><strong>게임 방법 영상 보기</strong><span class="rules-sub">실제 두 판 풀이와 4·3·3 분포까지 한 번에</span></span><span class="rules-play" aria-hidden="true"></span></button>
       <div class="intro-art" aria-hidden="true"><div class="sample-back"><img src="./assets/back.webp" width="630" height="880" alt=""><span>이 카드의<br>자리는 어디?</span></div><div class="art-note"><span class="mascot-turnaround" role="img" aria-label="안경 쓴 펭귄 마스코트"></span>외울 필요 없어요.<br>두 기준만 읽어 보세요.<span>↙</span></div><div class="mini-bins">${POSITIONS.map(p=>`<div class="mini-bin ${p}">${icon(p)}<b>${LABELS[p]}</b></div>`).join('')}</div></div>
     </div>
     <section class="setup" aria-labelledby="setup-title"><p class="eyebrow">01 / 오늘의 수거 구역</p><h2 id="setup-title">어디부터 연습할까요?</h2><p class="muted">선택한 지역과 면적 안에서만 출제해요.</p>
@@ -188,6 +188,13 @@ document.addEventListener('keydown',event=>{
   if(event.repeat||event.altKey||event.ctrlKey||event.metaKey||event.shiftKey||/^(INPUT|SELECT|TEXTAREA)$/.test(event.target.tagName))return;
   if(session?.phase==='selecting'&&['1','2','3'].includes(event.key)){event.preventDefault();submit(POSITIONS[Number(event.key)-1]);}
 });
+// Rules film: a static <dialog> outside the re-rendered root, opened from the start screen.
+const rulesDialog=document.querySelector('#rules-video'),rulesFilm=rulesDialog.querySelector('video');
+document.addEventListener('click',event=>{
+  if(event.target.closest('[data-rules-video]')){rulesDialog.returnValue='';rulesDialog.showModal();rulesFilm.play().catch(()=>{});}
+  else if(event.target===rulesDialog)rulesDialog.close();
+});
+rulesDialog.addEventListener('close',()=>{rulesFilm.pause();if(rulesDialog.returnValue==='play')document.querySelector('#setup-form .start')?.focus();});
 async function loadData() {
   if(typeof DecompressionStream==='function'){
     try{

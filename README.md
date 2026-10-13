@@ -38,3 +38,15 @@ python3 -m http.server 9035 --bind 127.0.0.1
 기록 이미지 다운로드와 링크 문구 복사는 사용자가 버튼을 눌렀을 때만 이루어집니다.
 
 `release-manifest.json`은 현재 공개 파일의 목록·크기·SHA-256입니다. 업데이트는 새 묶음으로 교체하고, 새 목록에 없는 이전 게임 파일은 제거하세요.
+
+## 게임 방법 영상
+
+첫 화면의 **게임 방법 영상 보기**는 `assets/rules-video.mp4`(1280×720 H.264, 한국어 음성·화면 자막)를
+같은 페이지의 창에서 재생합니다. 포스터는 `assets/rules-video.jpg`입니다. 외부 동영상 서비스나 추적 코드는 쓰지 않습니다.
+
+
+## 저작권
+
+펭귄 캐릭터 ‘또박’과 이를 담은 이미지·영상(`assets/mascot-*.webp`, `assets/turnaround.webp`, 카드 뒷면 `assets/back.webp`, `assets/rules-video.mp4`)은
+© 2026 Nobot Kang. All rights reserved. 어떤 오픈소스 라이선스도 적용되지 않으며, 허락 없이 복제·변형·재배포할 수 없습니다.
+게임 화면·기록 이미지·영상 파일에도 같은 표시가 들어 있습니다.
